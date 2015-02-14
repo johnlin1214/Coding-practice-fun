@@ -14,5 +14,16 @@ function letterCount(string) {
   }
   return letterCountResult.join("")
 }
-
 // letterCount("ccaabbaa") => 'a4b2c2'
+
+function replaceSpace(string) {
+  var formatedString = string.trim().replace(/\s+/g, '%20')
+  return formatedString;
+}
+// replaceSpace("  john lin     !  ") => 'john%20lin%20!'
+
+function arrayRotate(array){
+  array.push(array.shift());
+  return array;
+}
+// arrayRotate(['h','e','l','l','o']) => ['o','h','e','l','l'];
