@@ -27,3 +27,35 @@ function arrayRotate(array){
   return array;
 }
 // arrayRotate(['h','e','l','l','o']) => ['o','h','e','l','l'];
+
+function bisearch(array, num){
+  var low = 0;
+  var high = array.length-1;
+    while(true) {
+       var mid =  Math.floor((low + high) / 2);
+       if (num === array[mid]) {
+           return mid;
+       }
+       if (low + 1 === high) {
+           return -1;
+       }
+       num < array[mid] ? high = mid : low = mid;
+    }
+}
+// bisearch([2,7,22,44,65,77,88,100],22) => 2
+
+function bubbleSort(array){
+  var sorted;
+  do {
+      sorted = false;
+      for(var i =0; i < array.length-1; i++) {
+
+          if (  array[i] > array[i+1]) {
+           var temp = null;
+           array[i]
+           sorted = true;
+          }
+      }
+  } while (sorted)
+}
+// bubbleSort([3,0,2,1])
