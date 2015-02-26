@@ -32,7 +32,7 @@ four.left = two
 #  / \     / \
 # 1   3   5   7
 
-class Tree
+class BinarySearch
   def initialize(root)
     @root = root
   end
@@ -60,23 +60,61 @@ class Tree
    end
  end
 
- def greatest_sum(node = @root)
-   return 0 if node == nil
-   node.value + max(greatest_sum(node.left), greatest_sum(node.right))
+ def breathFirstSearch(value, root = @root)
+    return true if root.value === value
+    queque = [root]
+    until queque.empty?
+      currentNode = queque.shift
+      return true if currentNode.value == value
+      currentNode.left ? queque.push(currentNode.left) : nil
+      currentNode.right ? queque.push(currentNode.right) : nil
+    end
+   return false
  end
 
- private
+  def depthFirstSearch(value, root = @root)
+    return true if root.value == value
+    stack = [root]
+    until stack.empty?
+      currentNode = stack.pop
+      p currentNode.value
+      return true if currentNode.value == value
+      currentNode.left ? stack.push(currentNode.left) : nil
+      currentNode.right ? stack.push(currentNode.right) : nil
+    end
+    return false
+  end
 
- def max(*values)
+  def depthFirstSearchRecursion(value, current = @root)
+    return current if current.value == value
+    left_search = depthFirstSearchRecursion(value, current.left) if current.left
+    return left_search if left_search
+    right_search = depthFirstSearchRecursion(value, current.right) if current.right
+    return right_search if right_search
+    return false
+  end
+
+  def greatest_sum(node = @root)
+    return 0 if node == nil
+    node.value + max(greatest_sum(node.left), greatest_sum(node.right))
+  end
+
+  private
+
+  def max(*values)
     values.max
- end
+  end
 end
 
-tree = Tree.new(four)
-# bi.printBredth(four)
-tree.insert(0)
-tree.insert(10)
- #          4
+tree = BinarySearch.new(four)
+# tree.printLevels(four)
+# tree.insert(0)
+# tree.insert(10)
+# tree.breathFirstSearch(5)
+# tree.depthFirstSearch(5)
+# tree.depthFirstSearchRecursion(3)
+p tree.greatest_sum
+ #           4
  #        /   \
  #       /     \
  #      2       6
@@ -85,4 +123,3 @@ tree.insert(10)
  #  /              \
  # 0                10
 
- p tree.greatest_sum
