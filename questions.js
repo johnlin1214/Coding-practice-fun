@@ -59,3 +59,22 @@ function bubbleSort(array){
   } while (sorted)
 }
 // bubbleSort([3,0,2,1])
+
+function getElByClassName(className, node) {
+    var currentNode = node || document.body;
+    var currentNodeClassList = currentNode.classList;
+    var matchNodes = [];
+    currentNodeClassList.forEach(function(name){
+        if(name === className) {
+            matchNodes.push(currentNode);
+        }
+    });
+
+    var childernLength = currentNode.childern.length;
+    if(childernLength > 0) {
+        for(var index = 0; index < childernLength; index++) {
+           matchNodes = matchNodes.concat(getElByClassName(className, currentNode.childern[index]));
+        }
+    }
+    return matchNodes;
+}
