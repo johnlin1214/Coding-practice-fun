@@ -32,7 +32,7 @@ four.left = two
 #  / \     / \
 # 1   3   5   7
 
-class BinarySearch
+class Tree
   def initialize(root)
     @root = root
   end
@@ -94,9 +94,32 @@ class BinarySearch
     return false
   end
 
+#       4
+#     /   \
+#    /     \
+#   2       6
+#  / \     / \
+# 1   3   5   7
+
+  def countHeight(node = @root, depth = 0)
+    return 0 if !node.left && !node.right
+    right = countHeight(node.right, depth) if node.right
+    left = countHeight(node.left) if node.left
+    max(countHeight(node.right), countHeight(node.left)) + 1
+  end
+
   def greatest_sum(node = @root)
     return 0 if node == nil
     node.value + max(greatest_sum(node.left), greatest_sum(node.right))
+  end
+
+  def nodeCount(node = @root)  # error
+    return 1 if node.left == nil || node.right == nil
+    nodeCount(node.left) + nodeCount(node.right) + 1
+  end
+
+  def heightCount(node = @root)
+     node == nil ? -1 : max(heightCount(node.left) + heightCount(node.right)) + 1
   end
 
   private
@@ -106,15 +129,21 @@ class BinarySearch
   end
 end
 
-tree = BinarySearch.new(four)
-# tree.printLevels(four)
-# tree.insert(0)
+tree = Tree.new(four)
+# p tree.nodeCount
+# p tree.countHeight
 # tree.insert(10)
-# tree.breathFirstSearch(5)
+# tree.insert(0)
+# p four
+# # p tree.printLevels(four)
+# p tree.nodeCount
+
+# # tree.breathFirstSearch(5)
 # tree.depthFirstSearch(5)
-# tree.depthFirstSearchRecursion(3)
-p tree.greatest_sum
- #           4
+p tree.depthFirstSearchRecursion(3)
+# p tree.greatest_sum
+
+ #          4
  #        /   \
  #       /     \
  #      2       6
@@ -123,3 +152,16 @@ p tree.greatest_sum
  #  /              \
  # 0                10
 
+def print_spiral_recursive(matrix)
+    copy_matrix = matrix
+    return if copy_matrix.empty?
+    top_row = copy_matrix.shift
+    top_row.each { |num| puts num }
+    copy_matrix = copy_matrix.transpose.reverse
+    print_spiral_recursive(copy_matrix)
+end
+
+matrix = [[11, 12, 13, 14, 15],
+[21, 22, 23, 24, 25],
+[31, 32, 33, 34, 35],
+[41, 42, 43, 44, 45]]
